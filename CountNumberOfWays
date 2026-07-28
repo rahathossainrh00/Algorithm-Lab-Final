@@ -6,17 +6,12 @@ int dp[mx][mx];
 
 int counts(int coins[], int n, int target_amount)
 {
-    if (target_amount == 0)
-        return 1;
+    if (target_amount == 0) return 1;
+    if (target_amount < 0 || n == 0) return 0;
 
-    if (target_amount < 0 || n == 0)
-        return 0;
-
-    if (dp[n][target_amount] != -1)
-        return dp[n][target_amount];
-
-    dp[n][target_amount] = counts(coins, n, target_amount - coins[n-1])
-                         + counts(coins, n-1, target_amount);
+    if (dp[n][target_amount] == -1)
+        dp[n][target_amount] = counts(coins, n, target_amount - coins[n-1])
+                             + counts(coins, n-1, target_amount);
 
     return dp[n][target_amount];
 }

@@ -1,0 +1,167 @@
+# STL String & Vector — Quick Example Reference
+
+Short, runnable snippets for every common operation. Each one is minimal on purpose — copy, run, tweak.
+
+---
+
+## std::string
+
+```cpp
+#include <iostream>
+#include <string>
+using namespace std;
+```
+
+**Declaring**
+```cpp
+string s1;              // empty string
+string s2 = "hello";    // direct init
+string s3(5, '*');      // "*****"
+```
+
+**Reading input**
+```cpp
+string name;
+cin >> name;            // reads ONE word, stops at space
+getline(cin, name);     // reads the whole line, including spaces
+```
+
+**Size & access**
+```cpp
+string s = "hello";
+cout << s.size();       // 5
+cout << s[0];            // 'h' — no bounds check
+cout << s.at(1);          // 'e' — throws if out of range
+cout << s.front();       // 'h'
+cout << s.back();        // 'o'
+```
+
+**Adding to a string**
+```cpp
+string s = "hi";
+s += " there";           // "hi there"
+s.append("!");           // "hi there!"
+s.push_back('?');        // "hi there!?"
+```
+
+**Concatenation**
+```cpp
+string a = "code", b = "master";
+string combined = a + b;  // "codemaster"
+```
+
+**Comparison**
+```cpp
+string a = "apple", b = "banana";
+if (a == b) { /* equal */ }
+if (a < b)  { /* a comes first alphabetically */ }
+```
+
+**Substring**
+```cpp
+string s = "Learn programming today";
+string part = s.substr(6, 11);  // "programming"
+//                     ^start  ^length
+```
+
+**Searching**
+```cpp
+string s = "I love coding";
+size_t pos = s.find("love");     // 2
+if (pos != string::npos)
+    cout << "Found at " << pos;
+```
+
+**Erase / insert / replace**
+```cpp
+string s = "Hello World";
+s.erase(5, 6);              // "Hello"
+s.insert(5, " C++");        // "Hello C++"
+s.replace(0, 5, "Hi");      // "Hi C++"
+```
+
+**Clear / empty check**
+```cpp
+s.clear();
+if (s.empty()) cout << "empty!";
+```
+
+---
+
+## std::vector
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>   // for sort/reverse
+using namespace std;
+```
+
+**Declaring**
+```cpp
+vector<int> v1;                    // empty
+vector<int> v2(5);                 // 5 zeros
+vector<int> v3(5, 9);              // 5 nines
+vector<int> v4 = {10, 20, 30};      // initializer list
+```
+
+**Adding / removing**
+```cpp
+vector<int> v;
+v.push_back(10);   // {10}
+v.push_back(20);   // {10, 20}
+v.pop_back();       // {10}
+```
+
+**Access**
+```cpp
+vector<int> v = {5, 10, 15};
+cout << v[0];        // 5 — no bounds check
+cout << v.at(1);      // 10 — throws if out of range
+cout << v.front();   // 5
+cout << v.back();    // 15
+cout << v.size();    // 3
+```
+
+**Looping**
+```cpp
+vector<int> v = {1, 2, 3};
+
+for (int i = 0; i < v.size(); i++)   // index-based
+    cout << v[i] << " ";
+
+for (int x : v)                       // range-based
+    cout << x << " ";
+
+for (auto x : v)                      // same, auto type
+    cout << x << " ";
+```
+
+**Insert / erase**
+```cpp
+vector<int> v = {10, 20, 40, 50};
+v.insert(v.begin() + 2, 30);   // {10, 20, 30, 40, 50}
+v.erase(v.begin() + 1);         // remove index 1
+```
+
+**Clear / empty check**
+```cpp
+v.clear();
+cout << v.empty();   // 1 (true)
+```
+
+**Sorting & reversing**
+```cpp
+vector<int> v = {5, 2, 8, 1};
+sort(v.begin(), v.end());          // ascending: {1,2,5,8}
+sort(v.rbegin(), v.rend());        // descending: {8,5,2,1}
+reverse(v.begin(), v.end());        // just flips current order
+```
+
+---
+
+## One-glance rule to remember
+
+`[]` is fast but does **no bounds checking** — going out of range is undefined behavior.
+`.at()` is a touch slower but **throws an exception** if you go out of range — safer while debugging.
+This applies to both `string` and `vector`.
